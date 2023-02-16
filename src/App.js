@@ -112,7 +112,7 @@ const App = () => {
   };
 
   // function to interact with our smartContract
-  const wave = async () => {
+  const wave = async (a) => {
     try {
       const { ethereum } = window;
 
@@ -131,7 +131,7 @@ const App = () => {
         console.log("Retrieved total wave count...", count.toNumber());
 
         // executing the actual wave from my smart contract
-        const waveTxn = await wavePortalContract.wave("I love my laptop");
+        const waveTxn = await wavePortalContract.wave(a);
         console.log("Mining...", waveTxn.hash);
 
         await waveTxn.wait();
@@ -145,6 +145,14 @@ const App = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+  // to handle message submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setMessage(" ");
+    console.log(message);
+    wave(message);
+    return;
   };
 
   /*
@@ -162,16 +170,15 @@ const App = () => {
   return (
     <div className="mainContainer">
       <div className="dataContainer">
-        <div className="header">👋 Hey there!</div>
+        <div className="header">🤐🤫 Whisperrrr!</div>
 
         <div className="bio">
-          I am Ugochukwu and I worked on self-driving cars so that's pretty cool
-          right? Connect your Ethereum wallet and wave at me!
+          Whisper! your thought nobody will know, let it off your chest
         </div>
 
-        <button className="waveButton" onClick={wave}>
+        {/* <button className="waveButton" onClick={wave}>
           Wave at Me
-        </button>
+        </button> */}
 
         {/*
          * If there is no currentAccount render this button
@@ -182,10 +189,35 @@ const App = () => {
           </button>
         )}
         {currentAccount && (
-          <form id="message" onSubmit={null}>
-            <textarea></textarea>
-            <button type="submit" className="waveButton">
-              Submit
+          <form id="form" onSubmit={handleSubmit}>
+            <textarea
+              rows="5"
+              cols="60"
+              style={{
+                backgroundColor: "OldLace",
+                marginTop: "16px",
+                padding: "8px",
+                border: "0",
+                borderRadius: "5px",
+              }}
+              className="textarea"
+              id=" message"
+              name="message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            ></textarea>
+            <br />
+            <button
+              style={{
+                cursor: "pointer",
+                marginTop: "16px",
+                padding: "8px",
+                border: "0",
+                borderRadius: "5px",
+              }}
+              typeof="submit"
+            >
+              Send whsiper
             </button>
           </form>
         )}
