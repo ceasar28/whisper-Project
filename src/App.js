@@ -136,6 +136,7 @@ const App = () => {
 
         await waveTxn.wait();
         console.log("Mined --", waveTxn.hash);
+        getAllWaves();
 
         count = await wavePortalContract.getTotalWaves();
         console.log("Retrieved total wave count ...", count.toNumber());
